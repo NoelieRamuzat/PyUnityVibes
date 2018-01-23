@@ -2,6 +2,7 @@ from Network.TCPClient import TCPClient
 from UI.UnityObject import UnityObject
 from Network.Callback import Callback
 from UI.Color import Color
+from Animation.Animation import Animation
 import json
 
 class UnityFigure(object):
@@ -11,6 +12,7 @@ class UnityFigure(object):
 
     ACTION_INIT = 'Init'
     ACTION_CREATE = 'Create'
+    ACTION_ANIMATION = 'Animation'
 
     OBJECT_3D_PLANE = 0
     OBJECT_3D_CUBE = 1
@@ -112,5 +114,9 @@ class UnityFigure(object):
         except Exception as e:
             pass
 
+    def createAnimation(self):
+        return Animation()
 
+    def animate(self, animation):
+        self.sendAction(self.ACTION_ANIMATION, animation.dictObject)
 
