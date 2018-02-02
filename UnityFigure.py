@@ -114,8 +114,8 @@ class UnityFigure(object):
         except Exception as e:
             pass
 
-    def createAnimation(self):
-        return Animation()
+    def createAnimation(self, dt):
+        return Animation(dt)
 
     def animate(self, animation):
         self.sendAction(self.ACTION_ANIMATION, animation.dictObject)
