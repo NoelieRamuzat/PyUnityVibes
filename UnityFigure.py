@@ -75,7 +75,7 @@ class UnityFigure(object):
 
     def onCreated(self, id, obj):
         obj.id = id
-        print(obj.type + obj.id + "created")
+        print(str(obj.type) + " " + str(obj.id) + " created")
 
     def sendAction(self, action, content, callback = None):
         obj = {
@@ -90,27 +90,26 @@ class UnityFigure(object):
         self.msgId += 1
 
     def onMessageReceived(self, message):
-
         message = message.decode("ascii").replace("\\", "").replace("(Object3D)", "")
-        print("Received: ", message)
         msg = json.loads(message)
-        print(msg)
-        #try:
+        try:
+            self.tcpClient.messageID = msg['msgId']
+            msgId = self.tcpClient.messageID
+            idObject = msg['objId']
+            msgAction = msg['action']
 
-        self.tcpClient.messageID = msg['msgId']
-        msgId = self.tcpClient.messageID
-        idObject = msg['objId']
-        msgAction = msg['type']
-        if msgId in self.msgCallbacks.keys():
-            callback = self.msgCallbacks[msgId]
-            if msgAction == 'Get':
-                callback.function(msg['objContent'])
-            elif msgAction == 'Create':
-                callback.function(idObject, callback.object)
-            else:
-                callback.function()
-        #except Exception as e:
-         #   pass
+            if msgId in self.msgCallbacks.keys():
+                callback = self.msgCallbacks[msgId]
+                callback.object.type = msg['type']
+                if msgAction == 'Get':
+                    msgContentObj = msg['contentObj']
+                    callback.function(callback.object, msgContentObj)
+                elif msgAction == 'Create':
+                    callback.function(idObject, callback.object)
+                else:
+                    callback.function(callback.object)
+        except Exception as e:
+           pass
 
     def createAnimation(self, dt):
         return Animation(dt)

@@ -9,21 +9,19 @@ class UnityObject(object):
 
     def __init__(self, figure, id, data):
         self.id = id
+        self.type = data['type']
         self.figure = figure
         self.data = data
         self.exists = True
 
     def delete(self):
         self.exists = False
-        obj = {
-            'id': self.id
-        }
+        self.data['id'] = self.id;
         callback = Callback(self.onDeleted, self.ACTION_DELETE, self)
-        self.figure.sendAction(self.ACTION_DELETE, obj, callback)
+        self.figure.sendAction(self.ACTION_DELETE, self.data, callback)
 
-    @staticmethod
-    def onDeleted():
-        print("Objet supprimé")
+    def onDeleted(self, obj):
+        print(str(obj.type) + " " + str(obj.id) + " deleted")
 
     def updatePosition(self, coordX, coordY, coordZ):
         self.data['coordX'] = coordX
@@ -51,9 +49,8 @@ class UnityObject(object):
         callback = Callback(self.onUpdated, self.ACTION_UPDATE, self)
         self.figure.sendAction(self.ACTION_UPDATE, self.data, callback)
 
-    @staticmethod
-    def onUpdated():
-        print("Objet mis à jour")
+    def onUpdated(self, obj):
+        print(str(obj.type) + " " + str(obj.id) + " updated")
 
     def getInfo(self):
         obj = {
@@ -63,9 +60,10 @@ class UnityObject(object):
         self.figure.sendAction(self.ACTION_GET, obj, callback)
         return self.data
 
-    def onGet(self, newData):
-        print("Informations de l'Objet récupérées")
+    def onGet(self, obj, newData):
+        print("Data from the object " + str(obj.type) + " " + str(obj.id) + " :")
         self.data = newData
+        print(str(self.data))
 
     def track(self):
         obj = {
@@ -74,6 +72,5 @@ class UnityObject(object):
         callback = Callback(self.onTracked, self.ACTION_TRACKING, obj)
         self.figure.sendAction(self.ACTION_TRACKING, obj, callback)
 
-    @staticmethod
-    def onTracked():
-        print("Objet suivi")
+    def onTracked(self, obj):
+        print(str(obj.type) + " " + str(obj.id) + " followed")
