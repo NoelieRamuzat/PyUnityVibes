@@ -27,9 +27,8 @@ class UnityFigure(object):
     COLOR_BLUE = "BLUE"
     COLOR_YELLOW = "YELLOW"
     COLOR_CYAN = "CYAN"
-    COLOR_PINK = "PINK"
-    COLOR_ORANGE = "ORANGE"
-    COLOR_PURPLE = "PURPLE"
+    COLOR_MAGENTA = "MAGENTA"
+    COLOR_GREY = "GREY"
     COLOR_BLACK = "BLACK"
     COLOR_WHITE = "WHITE"
 
@@ -50,9 +49,7 @@ class UnityFigure(object):
         }
         self.sendAction(self.ACTION_INIT, fig, self.onCreated)
 
-    def create(self, type, coordX, coordY, coordZ, rotX=0, rotY=0, rotZ=0, dimX=1, dimY=1, dimZ=1, color=None):
-        if color is None:
-            color = [0, 0, 255, 255]
+    def create(self, type, coordX, coordY, coordZ, rotX=0, rotY=0, rotZ=0, dimX=1, dimY=1, dimZ=1, color=""):
         self.objId += 1
         obj = {
             'type': type,
@@ -65,7 +62,7 @@ class UnityFigure(object):
             'dimX': dimX,
             'dimY': dimY,
             'dimZ': dimZ,
-            'color': str(color),
+            'color': color,
             'id': self.objId
         }
         newObj = UnityObject(self, self.objId, obj)

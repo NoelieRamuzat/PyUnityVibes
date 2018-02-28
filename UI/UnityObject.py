@@ -16,7 +16,7 @@ class UnityObject(object):
 
     def delete(self):
         self.exists = False
-        self.data['id'] = self.id;
+        self.data['id'] = self.id
         callback = Callback(self.onDeleted, self.ACTION_DELETE, self)
         self.figure.sendAction(self.ACTION_DELETE, self.data, callback)
 
@@ -45,7 +45,7 @@ class UnityObject(object):
         self.figure.sendAction(self.ACTION_UPDATE, self.data, callback)
 
     def updateColor(self, objectColor):
-        self.data['color'] = objectColor.toSting()
+        self.data['color'] = objectColor
         callback = Callback(self.onUpdated, self.ACTION_UPDATE, self)
         self.figure.sendAction(self.ACTION_UPDATE, self.data, callback)
 
@@ -53,11 +53,9 @@ class UnityObject(object):
         print(str(obj.type) + " " + str(obj.id) + " updated")
 
     def getInfo(self):
-        obj = {
-            'id': self.id
-        }
+        self.data['id'] = self.id
         callback = Callback(self.onGet, self.ACTION_GET, self)
-        self.figure.sendAction(self.ACTION_GET, obj, callback)
+        self.figure.sendAction(self.ACTION_GET, self.data, callback)
         return self.data
 
     def onGet(self, obj, newData):
