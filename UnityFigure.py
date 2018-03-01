@@ -112,5 +112,5 @@ class UnityFigure(object):
         return Animation(dt)
 
     def animate(self, animation):
-        self.sendAction(self.ACTION_ANIMATION, animation.dictObject)
+        self.sendAction(self.ACTION_ANIMATION, animation.getLists())
 
