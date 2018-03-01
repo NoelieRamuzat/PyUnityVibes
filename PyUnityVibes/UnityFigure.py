@@ -1,8 +1,11 @@
-from Network.TCPClient import TCPClient
-from UI.UnityObject import UnityObject
-from Network.Callback import Callback
-from Animation.Animation import Animation
 import json
+
+from PyUnityVibes.Animation.Animation import Animation
+from PyUnityVibes.Network.Callback import Callback
+from PyUnityVibes.UI.UnityObject import UnityObject
+
+from PyUnityVibes.Network.TCPClient import TCPClient
+
 
 class UnityFigure(object):
 

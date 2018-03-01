@@ -1,4 +1,5 @@
-from Network.Callback import Callback
+from PyUnityVibes.Network.Callback import Callback
+
 
 class UnityObject(object):
 
