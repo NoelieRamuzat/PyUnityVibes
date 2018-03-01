@@ -117,6 +117,10 @@ class UnityFigure(object):
     def createAnimation(dt):
         return Animation(dt)
 
+    def onAnimated(self, animation):
+        print("Animation started")
+
     def animate(self, animation):
-        self.sendAction(self.ACTION_ANIMATION, animation.getAnimationDict())
+        callback = Callback(self.onAnimated, self.ACTION_CREATE, animation)
+        self.sendAction(self.ACTION_ANIMATION, animation.getAnimationDict(), callback)
 
