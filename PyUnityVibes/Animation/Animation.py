@@ -17,10 +17,10 @@ class Animation(object):
         assert position.shape[0] == 3 and rotation.shape[0] == 3, "Wrong size of translation and/or rotation array. Must be (3, n)"
         self.dictObject[unityObject.id] = np.vstack((position, rotation))
 
-    def appendFrame(self, unityObject, x=0, y=0, z=0, rx=0, ry=0, rz=0):
-        addedCol = np.hstack((np.array([x, y, z]), np.array([rx, ry, rz])))
+    def appendFrame(self, unityObject, x=0, y=0, z=0, rx=0, ry=0, rz=0, color = unityObject.color):
+        addedCol = np.hstack((np.array([x, y, z]), np.array([rx, ry, rz]), np.array([unityObject.dimX, unityObject.dimY, unityObject.dimZ, color]))
         previousMovement = self.dictObject[unityObject.id]
-        self.dictObject[unityObject.id] = np.hstack((previousMovement, addedCol.reshape(6, 1)))
+        self.dictObject[unityObject.id] = np.hstack((previousMovement, addedCol.reshape(10, 1)))
 
     def setTrajectory(self, unityObject, position = np.array([[],[],[]]), rotation = np.array([[],[],[]])):
         assert position.shape[0] == 3 and rotation.shape[0] == 3, "Wrong size of translation and/or rotation array. Must be (3, n)"
